@@ -1,0 +1,10 @@
+from .base import *
+
+DEBUG = False
+
+SECRET_KEY = "TEMPORAL"
+
+API_ACCESS_KEY = "123"
+API_SECRET_KEY = "456"
+LMS_BASE = ""
+DECRYPTION_FILE_PATH = ""
