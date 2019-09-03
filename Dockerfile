@@ -1,6 +1,6 @@
 FROM python:3.6
 
-ENV DJANGO_SETTINGS_MODULE photo_verification.settings.development
+ENV DJANGO_SETTINGS_MODULE photo_verification.settings.production
 
 # Install requirements
 ADD requirements.txt /app/requirements.txt
