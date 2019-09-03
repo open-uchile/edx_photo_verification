@@ -1,0 +1,79 @@
+<DOCTYPE html>
+<html>
+    <head>
+        <title>Verificación EOL</title>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>Nombre</td>
+                <td>Photo</td>
+                <td>Documento de Identidad</td>
+            </tr>
+        {% for item in photoverificationrequest_list %}
+            <tr>
+                <td>{{ item.expected_name }}</td>
+                <td><img src="data:image/png;base64,{{item.photo_user}}" height="600" width="400" style="transform: scaleY(-1)"></td>
+                <td><img src="data:image/png;base64,{{item.photo_id}}" height="600" width="400"></td>
+                <td>
+                    <a href="#" onclick="call_verify_modal({{ item.id }}, '{{ item.expected_name }}' );">Verificar</a>
+                </td>
+                <td>
+                    <a href="#" onclick="call_invalidate_modal({{ item.id }}, '{{ item.expected_name }}');">Invalidar</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+        <div id="verify_user" class="modal">
+            <form method="POST" action="{% url 'submit_response' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id"/>
+                <input type="hidden" name="result" value="PASS"/>
+                <p>Verificar estudiante <b name="student_name"></b></p>
+                <p><input type="submit"></p>
+                <a href="#" rel="modal:close">Cerrar</a>
+            </form>
+        </div>
+        <div id="invalidate_user" class="modal">
+            <form method="POST" action="{% url 'submit_response' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id"/>
+                <input type="hidden" name="result" value="FAIL"/>
+                <p>Invalidar estudiante <b name="student_name"></b></p>
+                <label for="photo_reason">Razones por retrato:</label>
+                <textarea name="photo_reason" rows = "5" cols = "50" placeholder="Razones por retrato"></textarea>
+                <br/>
+                <label for="photoIdReasons">Razones por documento de identidad:</label>
+                <textarea name="photoIdReasons" rows = "5" cols = "50" placeholder="Razones por documento de identidad"></textarea>
+                <br/>
+                <label for="generalReasons">Otras razones: </label>
+                <textarea name="generalReasons" rows = "5" cols = "50" placeholder="Otras razones"></textarea>
+                <p><input type="submit"></p>
+                <a href="#" rel="modal:close">Cerrar</a>
+            </form>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+        <script>
+            function call_verify_modal(item_id, name) {
+                $('#verify_user [name="student_name"]').text(name);
+                $('#verify_user [name=id]').val(item_id);
+                $('#verify_user').modal({});
+            };
+            function call_invalidate_modal(item_id, name) {
+                $('#invalidate_user [name=student_name]').text(name);
+                $('#invalidate_user [name=id]').val(item_id);
+                $('#invalidate_user').modal({});
+            };
+            //$('#onclick').
+        </script>
+    </body>
+</html>
