@@ -10,16 +10,16 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Build Docker image
-        run: docker build . --file ./Dockerfile --tag eoluchile/course-discovery:${GITHUB_SHA} --tag eoluchile/course-discovery:latest
+        run: docker build . --file ./Dockerfile --tag eoluchile/edx_photo_verification:${GITHUB_SHA} --tag eoluchile/edx_photo_verification:latest
 
       - name: Test image
-        run: docker run --rm eoluchile/course-discovery:${GITHUB_SHA} python manage.py test
+        run: docker run --rm eoluchile/edx_photo_verification:${GITHUB_SHA} python manage.py test
 
       - name: Push
         run: |
           echo "${DOCKERHUB_PASSWORD}" | docker login --username ${DOCKERHUB_USER} --password-stdin
-          docker push eoluchile/course-discovery:${GITHUB_SHA}
-          docker push eoluchile/course-discovery:latest
+          docker push eoluchile/edx_photo_verification:${GITHUB_SHA}
+          docker push eoluchile/edx_photo_verification:latest
         env:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
