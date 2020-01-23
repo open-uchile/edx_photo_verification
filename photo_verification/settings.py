@@ -21,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = environ["SECRET_KEY"]
+SECRET_KEY = environ.get("SECRET_KEY", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -117,7 +117,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 # EDX Configuration
-API_ACCESS_KEY = environ["API_ACCESS_KEY"]
-API_SECRET_KEY = environ["API_SECRET_KEY"]
-LMS_BASE = environ["LMS_BASE"]
-DECRYPTION_FILE_PATH = environ["DECRYPTION_FILE_PATH"]
+API_ACCESS_KEY = environ.get("API_ACCESS_KEY", "")
+API_SECRET_KEY = environ.get("API_SECRET_KEY", "")
+LMS_BASE = environ.get("LMS_BASE", "")
+DECRYPTION_FILE_PATH = environ.get("DECRYPTION_FILE_PATH", "")
