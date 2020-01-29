@@ -18,8 +18,8 @@
         {% for item in photoverificationrequest_list %}
             <tr>
                 <td>{{ item.expected_name }}</td>
-                <td><img src="data:image/png;base64,{{item.photo_user}}" height="600" width="400" style="transform: scaleY(-1)"></td>
-                <td><img src="data:image/png;base64,{{item.photo_id}}" height="600" width="400"></td>
+                <td><img src="data:image/png;base64,{{item.photo_user}}" style="transform: scaleY(-1); max-height: 600px;max-width: 500px;"></td>
+                <td><img src="data:image/png;base64,{{item.photo_id}}" style="max-height: 600px;max-width: 500px;"></td>
                 <td>
                     <a href="#" onclick="call_verify_modal({{ item.id }}, '{{ item.expected_name }}' );">Verificar</a>
                 </td>
