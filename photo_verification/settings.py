@@ -84,6 +84,7 @@ DATABASES = {
         "USER": environ.get("MYSQL_USER"),
         "PASSWORD": environ.get("MYSQL_PASSWORD"),
         "HOST": environ.get("MYSQL_HOST"),
+        "PORT": environ.get("MYSQL_PORT",''), # Default to empty
     },
 }
 
