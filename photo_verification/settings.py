@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = environ.get("SECRET_KEY", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DJANGO_DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = ["*"]
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -128,9 +129,55 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # EDX Configuration
 API_ACCESS_KEY = environ.get("API_ACCESS_KEY", "")
 API_SECRET_KEY = environ.get("API_SECRET_KEY", "")
 LMS_BASE = environ.get("LMS_BASE", "")
 DECRYPTION_FILE_PATH = environ.get("DECRYPTION_FILE_PATH", "")
+
+# Log configuration
+# Reference https://www.askpython.com/django/django-logging
+LOGGING = {
+    'version': 1,
+    # Version of logging
+    'disable_existing_loggers': False,
+    'filters': {
+        # information regarding filters
+    },
+    'formatters': {
+        'default': {
+            'format': '[{asctime}] ({levelname}@{module}:{lineno}) {message}',
+            'style': '{',
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'photo-verification-out.log',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'interface': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'api': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'local': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        }
+    },
+}
