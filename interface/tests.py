@@ -118,9 +118,9 @@ class InterfaceSubmitTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
         error_list = [
-            {"userPhotoReasons": "Error 1"},
-            {"photoIdReasons": "Error 2"},
-            {"generalReasons": "Error 3"},
+            {"userPhotoReasons": ["Error 1"]},
+            {"photoIdReasons": ["Error 2"]},
+            {"generalReasons": ["Error 3"]},
         ]
         self.assertEqual(post.call_args[0][0], self.photo.response_to)
         self.assertDictEqual(
