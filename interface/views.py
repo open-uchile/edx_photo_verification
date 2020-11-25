@@ -71,7 +71,7 @@ class PhotoValidationSendResponse(View):
             error_types = ("userPhotoReasons", "photoIdReasons", "generalReasons")
             for error in error_types:
                 if request.POST.get(error, "").strip() != "":
-                    data["Reason"].append({error: request.POST.get(error).strip()})
+                    data["Reason"].append({error: [request.POST.get(error).strip()]})
         else:
             # We are not using "SYSTEM FAIL" message right now
             raise Exception(
