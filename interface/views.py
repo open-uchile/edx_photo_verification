@@ -19,7 +19,7 @@ class PhotoValidationListView(ListView):
     model = PhotoVerificationRequest
     queryset = PhotoVerificationRequest.objects.filter(
         verified=PhotoVerificationRequest.UNDEFINED
-    )
+    )[:5]
     template_name = "interface/request_list.html"
 
     @method_decorator(login_required)
