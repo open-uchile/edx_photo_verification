@@ -15,9 +15,12 @@ jobs:
       - name: Test image
         run: docker run --rm ghcr.io/eoluchile/edx_photo_verification:${GITHUB_SHA} python manage.py test
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: eolito
+          password: ${{ secrets.CR_PAT }}
+
       - name: Push
-        run: |
-          echo "${CR_PAT}" | docker login ghcr.io -u eolito --password-stdin
-          docker ghcr.io/push eoluchile/edx_photo_verification:${GITHUB_SHA}
-        env:
-          CR_PAT: ${{ secrets.CR_PAT }}
+        run: docker push ghcr.io/eoluchile/edx_photo_verification:${GITHUB_SHA}
